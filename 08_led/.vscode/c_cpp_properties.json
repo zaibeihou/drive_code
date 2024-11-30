@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/home/why/rk3568/linux_sdk/kernel/include/**",
+                "/home/why/rk3568/linux_sdk/kernel/arch/arm64/include**",
+                "/home/why/rk3568/linux_sdk/kernel/arch/arm64/include/generated/**",
+                "/home/why/rk3568/linux_sdk/kernel/arch/arm64/include/generated/uapi/**",
+                "/home/why/rk3568/linux_sdk/kernel/include/uapi/**",
+                "/home/why/rk3568/linux_sdk/kernel/include/generated/**",
+                "/home/why/rk3568/linux_sdk/kernel/include/asm-generic/**"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c17",
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "linux-gcc-x64",
+            "configurationProvider": "ms-vscode.makefile-tools"
+        }
+    ],
+    "version": 4
+}

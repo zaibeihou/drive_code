@@ -1,3 +1,0 @@
-/home/why/rk3568/03_dev_t/dev_t.ko
-/home/why/rk3568/03_dev_t/dev_t.o
-

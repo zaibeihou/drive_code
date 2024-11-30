@@ -1,1 +1,0 @@
-cmd_/home/why/rk3568/03_dev_t/dev_t.ko := aarch64-linux-gnu-ld -r -EL  -maarch64elf -T ./scripts/module-common.lds -T ./arch/arm64/kernel/module.lds  --build-id  -o /home/why/rk3568/03_dev_t/dev_t.ko /home/why/rk3568/03_dev_t/dev_t.o /home/why/rk3568/03_dev_t/dev_t.mod.o ;  true

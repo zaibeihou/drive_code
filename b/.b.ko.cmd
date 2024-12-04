@@ -1,1 +1,0 @@
-cmd_/home/why/rk3568/b/b.ko := aarch64-linux-gnu-ld -r -EL  -maarch64elf -T ./scripts/module-common.lds -T ./arch/arm64/kernel/module.lds  --build-id  -o /home/why/rk3568/b/b.ko /home/why/rk3568/b/b.o /home/why/rk3568/b/b.mod.o ;  true

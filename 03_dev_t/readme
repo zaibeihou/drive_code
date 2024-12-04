@@ -1,0 +1,20 @@
+在 Linux 系统中，这段代码创建的设备节点路径会在 /dev/test0。
+具体来说：
+
+class_create() 会在 /sys/class/ 目录下创建一个名为 "file_test" 的目录。
+device_create() 会：
+
+在 /sys/class/file_test/ 下创建设备相关信息
+在 /dev/ 目录下创建一个名为 "test0" 的设备节点文件
+
+
+
+所以：
+
+设备节点路径：/dev/test0
+设备类信息路径：/sys/class/file_test/
+
+你可以通过以下命令验证：
+ls -l /dev/test0  # 查看设备节点
+ls -l /sys/class/file_test/  # 查看设备类信息
+设备节点文件的权限默认是 root 用户可读可写（通常显示为 crw-------）。如果需要其他用户访问，需要通过 udev 规则或手动更改权限。

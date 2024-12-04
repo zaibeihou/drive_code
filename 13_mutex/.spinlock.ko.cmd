@@ -1,1 +1,0 @@
-cmd_/home/why/rk3568/drive_code/10_spinlock/spinlock.ko := aarch64-linux-gnu-ld -r -EL  -maarch64elf -T ./scripts/module-common.lds -T ./arch/arm64/kernel/module.lds  --build-id  -o /home/why/rk3568/drive_code/10_spinlock/spinlock.ko /home/why/rk3568/drive_code/10_spinlock/spinlock.o /home/why/rk3568/drive_code/10_spinlock/spinlock.mod.o ;  true

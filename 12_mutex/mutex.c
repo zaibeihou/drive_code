@@ -19,18 +19,11 @@ struct dev_test
 
 struct dev_test dev1;
 
-static spinlock_t spinlock;
-static int flag = 1; 
+static struct mutex mutexlock;
+
 static int cdev_test_open(struct inode *inode, struct file *file) {
 
-    spin_lock(&spinlock);
-    if(flag != 1){
-        spin_unlock(&spinlock);
-        printk("busy!\n");
-        return -EBUSY;
-    }
-    flag = 0;
-    spin_unlock(&spinlock);
+    mutex_lock(&mutexlock);
     //printk("This is cdev open\n");
     //dev1.minor = 0;
 
@@ -59,9 +52,7 @@ static ssize_t cdev_test_write(struct file *file, const char __user *buf,
 }
 
 static int cdev_test_release(struct inode *inode, struct file *file) {
-    spin_lock(&spinlock);
-    flag = 1;
-    spin_unlock(&spinlock);
+    mutex_unlock(&mutexlock);
     //printk("This is cdev release\n");
     return 0;
 }
@@ -106,7 +97,8 @@ static int module_cdev_init(void)
 
     printk("主设备号：%d 次设备号:test0 %d \n",dev1.major,dev1.minor);
 
-    spin_lock_init(&spinlock); 
+    mutex_init(&mutexlock);
+
     return 0;
 
 
@@ -124,6 +116,7 @@ alloc_chrdev_region_error:
 
 static void module_cdev_exit(void)      // 驱动出口函数
 {
+    mutex_destroy(&mutexlock);
 // 删除第一个设备的资源
     cdev_del(&dev1.cdev_test);
     device_destroy(dev1.class_test, dev1.dev_num);

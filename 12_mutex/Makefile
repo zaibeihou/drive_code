@@ -1,7 +1,7 @@
 export ARCH=arm64
 export CROSS_COMPILE=aarch64-linux-gnu-
 
-obj-m := spinlock.o
+obj-m := mutex.o
 
 KDIR := /home/why/rk3568/linux_sdk/kernel
 PWD ?= $(shell pwd)

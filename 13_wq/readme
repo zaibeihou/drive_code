@@ -1,0 +1,20 @@
+声明等待队列头：
+
+DECLARE_WAIT_QUEUE_HEAD(head);
+
+在读操作中使用等待队列：
+
+wait_event_interruptible(head, test_dev->flag);
+这行代码会让读进程在队列头上等待，直到 flag 变为真。
+
+在写操作中唤醒等待队列：
+
+test_dev->flag = 1;
+wake_up_interruptible(&head);
+写操作将 flag 置为1，然后唤醒在等待队列上睡眠的进程。
+这是一个典型的生产者-消费者模型：
+
+读进程(消费者)在没有数据时会在等待队列上睡眠
+写进程(生产者)写入数据后会唤醒等待的读进程
+
+虽然内核中等待队列的完整实现包含了等待队列项(wait queue entry)，但在这个驱动程序中，我们只需要使用队列头，因为 wait_event_interruptible 宏会帮我们处理等待队列项的创建和添加。内核会自动管理在该队列头上等待的进程列表。

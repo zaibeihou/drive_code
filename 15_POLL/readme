@@ -1,0 +1,156 @@
+程序启动阶段:
+
+int fd = open("/dev/test0", O_RDWR);
+
+程序打开设备文件 /dev/test0
+内核调用驱动的 cdev_test_open 函数
+open 函数通过 container_of 获取设备结构体，存入 file->private_data
+
+
+poll 准备阶段:
+
+struct pollfd fds[1];
+fds[0].fd = fd;
+fds[0].events = POLLIN;  // 设置监听读事件
+
+初始化 pollfd 结构体
+设置要监听的文件描述符和事件类型
+
+
+进入 while 循环，调用 poll:
+
+poll(fds, 1, -1)
+当 poll 系统调用执行时：
+a) 用户空间 -> 内核空间转换：
+
+内核创建 poll_table_struct 结构体
+设置默认回调函数 __pollwait
+
+b) 内核调用驱动的 poll 函数：
+static __poll_t cdev_test_poll(struct file *file, struct poll_table_struct *p)
+
+获取设备结构体 test_dev
+调用 poll_wait(file, &head, p)
+
+__pollwait 被执行
+创建等待队列项
+将当前进程添加到等待队列
+
+
+检查 flag 状态
+
+如果 flag=0，返回 mask=0
+如果 flag=1，返回 mask=POLLIN
+
+
+
+c) 根据返回的 mask 值：
+
+如果 mask=0，进程进入休眠状态
+如果 mask=POLLIN，poll 返回，程序继续执行
+
+
+有数据可读时:
+
+if(fds[0].revents == POLLIN){
+    read(fd, buf, sizeof(buf));
+    printf("read : %s\n", buf);
+}
+当其他进程写入数据时：
+
+write 系统调用执行
+驱动的 write 函数被调用
+数据被复制到内核缓冲区
+flag 被设置为 1
+wake_up_interruptible 唤醒等待队列中的进程
+
+被唤醒后：
+
+poll 返回，revents 被设置为 POLLIN
+程序调用 read 读取数据
+驱动将数据从内核缓冲区复制到用户空间
+flag 被设置为 0
+数据被打印到终端
+
+
+循环继续:
+
+
+程序回到 poll 调用，重新等待新的数据
+
+
+程序退出时:
+
+close(fd);
+
+调用驱动的 release 函数
+释放相关资源
+
+在整个过程中：
+
+poll 机制避免了持续轮询，节省 CPU 资源
+等待队列实现了进程休眠和唤醒
+copy_to_user/copy_from_user 确保了用户空间和内核空间的安全数据传输
+
+这就是为什么即使看起来简单的程序，背后也涉及到复杂的内核机制，实现了高效的进程间通信。
+
+
+
+
+当你调用 poll_wait(file, &head, p) 时，实际上发生了这些事情:
+
+首先，p 里面包含了一个回调函数(callback)，这个回调函数会:
+
+创建一个等待队列项(wait queue entry)
+把当前进程注册到这个等待队列项中
+将这个等待队列项添加到驱动提供的等待队列头(&head)中
+
+
+举个具体例子:
+
+// 用户程序
+int fd = open("/dev/test0", O_RDWR);
+struct pollfd fds;
+fds.fd = fd;
+fds.events = POLLIN;
+
+while(1) {
+    ret = poll(&fds, 1, 5000);  // 超时时间5秒
+    if(ret > 0) {
+        // 有数据可读...
+    }
+}
+当这个 poll 系统调用执行时:
+用户空间: poll() 
+    │
+        ▼
+内核空间: do_sys_poll()
+    │    创建 poll_table_struct *p
+    │    p->_qproc = __pollwait (设置默认回调函数)
+    │
+        ▼
+驱动: cdev_test_poll()
+    │    poll_wait(file, &head, p)  
+    │    └── p->_qproc(file, &head, p) // 实际调用__pollwait
+    │         └── 将当前进程添加到等待队列
+        ▼
+返回 mask
+
+如果去掉 poll_wait:
+
+static __poll_t cdev_test_poll(struct file *file, struct poll_table_struct *p) {
+    struct dev_test *test_dev = (struct dev_test *)file->private_data;
+    __poll_t mask = 0;
+    // poll_wait(file, &head, p);  // 如果注释掉这行
+    if(test_dev->flag == 1) {
+        mask |= POLLIN;
+    }
+    return mask;
+}
+会导致这些问题:
+
+poll 系统调用无法正确进入休眠状态
+变成了纯轮询，会浪费 CPU 资源
+无法及时响应设备状态变化
+
+所以虽然在代码中 p 看起来只是传来传去没做什么，但它实际上在幕后完成了进程休眠和唤醒的注册工作，是整个 poll 机制能够高效工作的关键。这就是为什么尽管看起来没用，但 poll_wait 和参数 p 是必不可少的。

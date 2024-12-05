@@ -1,0 +1,33 @@
+{
+    "files.associations": {
+        "kernel.h": "c",
+        "init.h": "c",
+        "module.h": "c",
+        "list.h": "c",
+        "const.h": "c",
+        "poison.h": "c",
+        "compiler.h": "c",
+        "bitops.h": "c",
+        "stat.h": "c",
+        "stddef.h": "c",
+        "array": "c",
+        "fs.h": "c",
+        "kdev_t.h": "c",
+        "moduleparam.h": "c",
+        "mm_types.h": "c",
+        "page-flags-layout.h": "c",
+        "kmod.h": "c",
+        "umh.h": "c",
+        "gfp.h": "c",
+        "mmdebug.h": "c",
+        "mmzone.h": "c",
+        "wait.h": "c",
+        "debug.h": "c",
+        "types.h": "c",
+        "unistd.h": "c",
+        "fcntl.h": "c",
+        "poll.h": "c",
+        "signal.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "enabled"
+}

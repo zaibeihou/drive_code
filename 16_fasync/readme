@@ -1,0 +1,52 @@
+让我们来分析应用程序中信号相关的每一步设置：
+// 1. 信号处理函数注册
+signal(SIGIO, func);
+这一步将 SIGIO 信号与处理函数 func 关联起来。当进程收到 SIGIO 信号时，会执行 func 函数。
+// 2. 设置进程为文件的属主
+fcntl(fd, F_SETOWN, getpid());
+这一步告诉内核，当前进程将成为该文件的信号接收进程。只有文件的属主进程才能接收到该文件的异步通知。
+// 3. 设置异步通知标志
+int flags = fcntl(fd, F_GETFL);         // 先获取当前标志
+fcntl(fd, F_SETFL, flags | FASYNC);     // 添加 FASYNC 标志
+这两步启用文件的异步通知机制：
+
+F_GETFL 获取当前文件状态标志
+F_SETFL 设置新的标志，通过 | FASYNC 添加异步通知功能
+
+完整的工作流程是：
+
+应用程序：
+
+// 设置信号处理函数
+signal(SIGIO, func);
+
+// 设置进程所有权
+fcntl(fd, F_SETOWN, getpid());
+
+// 启用异步通知
+flags = fcntl(fd, F_GETFL);
+fcntl(fd, F_SETFL, flags | FASYNC);
+
+驱动程序响应：
+
+// 当应用设置 FASYNC 标志时会调用这个函数
+static int cdev_test_fasync(int fd, struct file *file, int on) {
+    struct dev_test *test_dev = (struct dev_test *)file->private_data;
+    return fasync_helper(fd, file, on, &test_dev->fasync);
+}
+
+// 当有数据写入时，发送信号
+static ssize_t cdev_test_write(...) {
+    ...
+    kill_fasync(&test_dev->fasync, SIGIO, POLLIN);
+    ...
+}
+所以完整的流程是：
+
+注册信号处理函数
+设置进程为文件属主
+启用异步通知机制
+当驱动程序有数据时，发送 SIGIO 信号
+进程收到信号，执行 func 函数读取数据
+
+这就是为什么需要这些设置 - 它们共同构建了一个完整的异步通知机制。 

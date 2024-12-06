@@ -35,7 +35,9 @@
         "memory.h": "c",
         "fixmap.h": "c",
         "sizes.h": "c",
-        "boot.h": "c"
+        "boot.h": "c",
+        "time.h": "c",
+        "cdev.h": "c"
     },
     "C_Cpp.errorSquiggles": "enabled"
 }

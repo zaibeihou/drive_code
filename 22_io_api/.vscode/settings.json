@@ -1,0 +1,20 @@
+{
+    "files.associations": {
+        "kernel.h": "c",
+        "init.h": "c",
+        "module.h": "c",
+        "list.h": "c",
+        "const.h": "c",
+        "poison.h": "c",
+        "compiler.h": "c",
+        "bitops.h": "c",
+        "time.h": "c",
+        "ioctl.h": "c",
+        "errno.h": "c",
+        "uaccess.h": "c",
+        "wait.h": "c",
+        "lib.h": "c",
+        "stdio.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "enabled"
+}

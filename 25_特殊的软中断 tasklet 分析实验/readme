@@ -1,0 +1,94 @@
+https://www.cnblogs.com/god-of-death/p/17365468.html
+
+由于软中断必须使用可重入函数，这就导致设计上的复杂度变高，临界区必须用自旋锁保护，因为同一个软中断服务函数可以在几个 CPU 上同时运行。作为设备驱动程序的开发者来说，增加了负担。而如果某种应用并不需要在多个CPU上并行执行，那么软中断其实是没有必要的。tasklet具有以下特性：
+	一种特定类型的tasklet只能运行在一个CPU上，不能并行，只能串行执行。
+	多个不同类型的tasklet可以并行在多个CPU上。
+	从软中断的实现机制可知，内核也没有提供通用的增加软中断的接口，软中断是静态分配的，在内核编译好之后，就不能改变。但tasklet就灵活许多，可以在运行时改变（比如添加模块时）。
+	软中断的pending标志位只有32位，tasklet使用链表管理，没有数量限制。
+	为了cache优化，每个tasklet只会在调度它的CPU上运行，即哪个CPU执行tasklet_schedule，哪个CPU就处理tasklet。
+	tasklet是在两种软中断类型的基础上实现的，如果不需要软中断的并行特性，tasklet就是最好的选择。也就是说tasklet是软中断的一种特殊用法，即延迟情况下的串行执行。
+	
+tasklet 机制总结
+1. 每颗 cpu 都有自己的 tasklet 链表，这样可以将 tasklet 分布在各个 cpu 上，可实现并发不同的 tasklet。
+
+2. 相同的 tasklet 实例只能在某一颗 cpu 上串行执行，其它 cpu 会暂时无法添加到自己的链表，在此情况下，不需要考虑并发问题(即不需要加锁)。
+
+3. 如果 tasklet 已经被调度（加入待执行链表），指定的 tasklet 不会再次被加入链表内，即该请求不会被受理。
+
+4. tasklet_disable() 接口只是不执行指定的 tasklet，依旧可以通过 tasklet_schedule() 添加到待执行链表内，等 enable 了就可以被执行。
+
+
+tasklet 添加到链表是通过 tasklet_schedule() 和 tasklet_hi_schedule() 这两个函数实现的。让我详细解释一下过程：
+
+1. **普通优先级的 tasklet_schedule()**:
+static inline void tasklet_schedule(struct tasklet_struct *t)
+{
+    if (!test_and_set_bit(TASKLET_STATE_SCHED, &t->state)) {
+        __tasklet_schedule(t);     // 核心调度逻辑
+    }
+}
+
+然后在 __tasklet_schedule() 中:
+
+void __tasklet_schedule(struct tasklet_struct *t)
+{
+    unsigned long flags;
+    local_irq_save(flags);        // 关中断保护
+    t->next = NULL;               // 设置next指针为NULL
+    *__this_cpu_read(tasklet_vec.tail) = t;  // 加入当前CPU的队列尾部
+    __this_cpu_write(tasklet_vec.tail, &(t->next));
+    raise_softirq_irqoff(TASKLET_SOFTIRQ);   // 触发软中断
+    local_irq_restore(flags);     // 恢复中断
+}
+
+
+2. **高优先级的 tasklet_hi_schedule()**:
+
+static inline void tasklet_hi_schedule(struct tasklet_struct *t)
+{
+    if (!test_and_set_bit(TASKLET_STATE_SCHED, &t->state)) {
+        __tasklet_hi_schedule(t);   // 核心调度逻辑
+    }
+}
+```
+在 __tasklet_hi_schedule() 中的逻辑与普通优先级类似，只是：
+- 使用 tasklet_hi_vec 队列
+- 触发 HI_SOFTIRQ 软中断
+
+3. **关键点**：
+- tasklet 只会在第一次被调度时加入队列
+- 使用 state 位图确保同一个 tasklet 不会重复加入
+- 通过关中断来保护队列操作
+- 加入队列后立即触发对应的软中断
+
+所以总结来说，tasklet 是在调用这些调度函数时被添加到对应 CPU 的队列中，然后通过软中断机制来实际执行。
+
+
+
+底层实现
+
+tasklet 使用了两个软中断向量:
+
+HI_SOFTIRQ(高优先级tasklet)
+TASKLET_SOFTIRQ(普通优先级tasklet)
+
+
+软中断处理函数分别是 tasklet_hi_action() 和 tasklet_action()
+
+工作原理
+
+
+当调用 tasklet_schedule() 时,实际上是：
+
+将 tasklet 加入 per-CPU 的 tasklet 链表
+触发对应的软中断
+
+然后在软中断上下文中执行 tasklet 的处理函数
+
+简化的接口
+
+tasklet 在软中断基础上封装了更友好的接口
+对用户隐藏了复杂的软中断实现细节
+提供简单的 tasklet_init()、tasklet_schedule() 等函数
+
+所以可以说,tasklet 就是一个构建在软中断之上的抽象层,它利用软中断机制来实现自己的功能。这种设计既保留了软中断的高效性,又简化了编程接口

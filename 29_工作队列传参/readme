@@ -1,0 +1,58 @@
+container_of 是 Linux 内核中的一个重要宏定义，它的主要作用是通过结构体的成员找到结构体本身。它的定义在 <linux/kernel.h> 中，基本形式是：
+
+
+1. 基本用法：
+
+struct data {
+    int value;
+    struct work_struct work;
+    char name[20];
+};
+
+void work_func(struct work_struct *work)
+{
+    struct data *p;
+    p = container_of(work, struct data, work);
+    // 现在可以通过 p 访问整个 data 结构体
+}
+```
+
+2. 工作原理分解：
+- 首先获取结构体成员相对于结构体起始位置的偏移量
+- 然后用成员的地址减去这个偏移量
+- 最后得到结构体的起始地址
+
+3. 参数说明：
+- ptr: 结构体成员的指针
+- type: 结构体类型
+- member: 结构体成员的名称
+
+4. 常见应用场景：
+
+// 典型的工作队列场景
+struct my_device {
+    struct work_struct work;
+    // 其他设备相关的数据
+    int device_id;
+    char status;
+};
+
+void work_handler(struct work_struct *work)
+{
+    struct my_device *dev = container_of(work, struct my_device, work);
+    // 现在可以访问 dev->device_id 等数据
+}
+
+
+5. 为什么需要它：
+- 内核中很多数据结构都是嵌入式的，比如 work_struct 通常嵌入在更大的设备结构体中
+- 当回调函数只能得到 work_struct 指针时，需要一种方法找回包含它的完整结构体
+- container_of 提供了一种安全且标准的方式来完成这个转换
+
+6. 安全性考虑：
+
+// container_of 会进行类型检查，避免指针类型错误
+const typeof( ((type *)0)->member ) *__mptr = (ptr);
+
+
+

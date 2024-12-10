@@ -1,0 +1,5 @@
+GPIO pin脚计算公式：pin = bank*32+number //bank为组号，number为小组编号
+GPIO 小组编号计算公式：number = group*8 + X
+group: A = 0  B = 1 .....
+
+ex: GPIO0_B5  pin = 0*32 + 1*8 + 5 = 13 

@@ -1,0 +1,3 @@
+/home/why/rk3568/drive_code/23_INTERRUPT/interrupt.ko
+/home/why/rk3568/drive_code/23_INTERRUPT/interrupt.o
+

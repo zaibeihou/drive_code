@@ -1,8 +1,10 @@
-cmd_/home/why/rk3568/drive_code/23_INTERRUPT/interrupt.o := ./scripts/gcc-wrapper.py aarch64-linux-gnu-gcc -Wp,-MD,/home/why/rk3568/drive_code/23_INTERRUPT/.interrupt.o.d -nostdinc -isystem /usr/local/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/../lib/gcc/aarch64-linux-gnu/6.3.1/include -I./arch/arm64/include -I./arch/arm64/include/generated  -I./include -I./arch/arm64/include/uapi -I./arch/arm64/include/generated/uapi -I./include/uapi -I./include/generated/uapi -include ./include/linux/kconfig.h -include ./include/linux/compiler_types.h -D__KERNEL__ -mlittle-endian -DKASAN_SHADOW_SCALE_SHIFT=3 -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -fshort-wchar -Werror-implicit-function-declaration -Werror=return-type -Wno-format-security -std=gnu89 -fno-PIE -mgeneral-regs-only -DCONFIG_AS_LSE=1 -fno-asynchronous-unwind-tables -Wno-psabi -mabi=lp64 -DKASAN_SHADOW_SCALE_SHIFT=3 -fno-delete-null-pointer-checks -Wno-frame-address -Os --param=allow-store-data-races=0 -Wframe-larger-than=2048 -fstack-protector-strong -Wno-unused-but-set-variable -Wno-unused-const-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -g -pg -Wdeclaration-after-statement -Wno-pointer-sign -Wno-array-bounds -Wno-maybe-uninitialized -fno-strict-overflow -fno-merge-all-constants -fmerge-constants -fno-stack-check -fconserve-stack -Werror=implicit-int -Werror=strict-prototypes -Werror=date-time -Werror=incompatible-pointer-types -Werror=designated-init -Wno-error  -DMODULE  -DKBUILD_BASENAME='"interrupt"' -DKBUILD_MODNAME='"interrupt"' -c -o /home/why/rk3568/drive_code/23_INTERRUPT/interrupt.o /home/why/rk3568/drive_code/23_INTERRUPT/interrupt.c
+cmd_/home/why/rk3568/drive_code/27_platform_led/platform_driver.mod.o := ./scripts/gcc-wrapper.py aarch64-linux-gnu-gcc -Wp,-MD,/home/why/rk3568/drive_code/27_platform_led/.platform_driver.mod.o.d -nostdinc -isystem /usr/local/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/../lib/gcc/aarch64-linux-gnu/6.3.1/include -I./arch/arm64/include -I./arch/arm64/include/generated  -I./include -I./arch/arm64/include/uapi -I./arch/arm64/include/generated/uapi -I./include/uapi -I./include/generated/uapi -include ./include/linux/kconfig.h -include ./include/linux/compiler_types.h -D__KERNEL__ -mlittle-endian -DKASAN_SHADOW_SCALE_SHIFT=3 -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -fshort-wchar -Werror-implicit-function-declaration -Werror=return-type -Wno-format-security -std=gnu89 -fno-PIE -mgeneral-regs-only -DCONFIG_AS_LSE=1 -fno-asynchronous-unwind-tables -Wno-psabi -mabi=lp64 -DKASAN_SHADOW_SCALE_SHIFT=3 -fno-delete-null-pointer-checks -Wno-frame-address -Os --param=allow-store-data-races=0 -Wframe-larger-than=2048 -fstack-protector-strong -Wno-unused-but-set-variable -Wno-unused-const-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -g -pg -Wdeclaration-after-statement -Wno-pointer-sign -Wno-array-bounds -Wno-maybe-uninitialized -fno-strict-overflow -fno-merge-all-constants -fmerge-constants -fno-stack-check -fconserve-stack -Werror=implicit-int -Werror=strict-prototypes -Werror=date-time -Werror=incompatible-pointer-types -Werror=designated-init -Wno-error  -DKBUILD_BASENAME='"platform_driver.mod"' -DKBUILD_MODNAME='"platform_driver"' -DMODULE  -c -o /home/why/rk3568/drive_code/27_platform_led/platform_driver.mod.o /home/why/rk3568/drive_code/27_platform_led/platform_driver.mod.c
 
-source_/home/why/rk3568/drive_code/23_INTERRUPT/interrupt.o := /home/why/rk3568/drive_code/23_INTERRUPT/interrupt.c
+source_/home/why/rk3568/drive_code/27_platform_led/platform_driver.mod.o := /home/why/rk3568/drive_code/27_platform_led/platform_driver.mod.c
 
-deps_/home/why/rk3568/drive_code/23_INTERRUPT/interrupt.o := \
+deps_/home/why/rk3568/drive_code/27_platform_led/platform_driver.mod.o := \
+    $(wildcard include/config/module/unload.h) \
+    $(wildcard include/config/retpoline.h) \
   include/linux/kconfig.h \
     $(wildcard include/config/cpu/big/endian.h) \
     $(wildcard include/config/booger.h) \
@@ -14,7 +16,6 @@ deps_/home/why/rk3568/drive_code/23_INTERRUPT/interrupt.o := \
     $(wildcard include/config/optimize/inlining.h) \
   include/linux/compiler-gcc.h \
     $(wildcard include/config/arm64.h) \
-    $(wildcard include/config/retpoline.h) \
     $(wildcard include/config/arch/use/builtin/bswap.h) \
   include/linux/module.h \
     $(wildcard include/config/modules.h) \
@@ -31,7 +32,6 @@ deps_/home/why/rk3568/drive_code/23_INTERRUPT/interrupt.o := \
     $(wildcard include/config/tracing.h) \
     $(wildcard include/config/event/tracing.h) \
     $(wildcard include/config/ftrace/mcount/record.h) \
-    $(wildcard include/config/module/unload.h) \
     $(wildcard include/config/constructors.h) \
     $(wildcard include/config/function/error/injection.h) \
     $(wildcard include/config/strict/module/rwx.h) \
@@ -646,245 +646,12 @@ deps_/home/why/rk3568/drive_code/23_INTERRUPT/interrupt.o := \
     $(wildcard include/config/have/mod/arch/specific.h) \
     $(wildcard include/config/modules/use/elf/rel.h) \
     $(wildcard include/config/modules/use/elf/rela.h) \
-  include/linux/interrupt.h \
-    $(wildcard include/config/irq/forced/threading.h) \
-    $(wildcard include/config/generic/irq/probe.h) \
-    $(wildcard include/config/proc/fs.h) \
-    $(wildcard include/config/irq/timings.h) \
-  include/linux/irqreturn.h \
-  include/linux/irqnr.h \
-  include/uapi/linux/irqnr.h \
-  include/linux/hardirq.h \
-  include/linux/ftrace_irq.h \
-    $(wildcard include/config/ftrace/nmi/enter.h) \
-    $(wildcard include/config/hwlat/tracer.h) \
-  include/linux/vtime.h \
-    $(wildcard include/config/virt/cpu/accounting.h) \
-    $(wildcard include/config/irq/time/accounting.h) \
-  include/linux/context_tracking_state.h \
-    $(wildcard include/config/context/tracking.h) \
-  arch/arm64/include/asm/hardirq.h \
-  arch/arm64/include/asm/irq.h \
-  include/asm-generic/irq.h \
-  arch/arm64/include/asm/kvm_arm.h \
-  arch/arm64/include/asm/esr.h \
-  include/linux/irq_cpustat.h \
-  include/linux/gpio.h \
-    $(wildcard include/config/gpiolib.h) \
-    $(wildcard include/config/arch/have/custom/gpio/h.h) \
-  include/asm-generic/gpio.h \
-    $(wildcard include/config/arch/nr/gpio.h) \
-  include/linux/of.h \
-    $(wildcard include/config/of/dynamic.h) \
-    $(wildcard include/config/sparc.h) \
-    $(wildcard include/config/of/promtree.h) \
-    $(wildcard include/config/of/kobj.h) \
-    $(wildcard include/config/of.h) \
-    $(wildcard include/config/of/numa.h) \
-    $(wildcard include/config/of/overlay.h) \
-  include/linux/mod_devicetable.h \
-  include/linux/uuid.h \
-  include/uapi/linux/uuid.h \
-  include/linux/property.h \
-  include/linux/fwnode.h \
-  include/linux/gpio/driver.h \
-    $(wildcard include/config/gpiolib/irqchip.h) \
-    $(wildcard include/config/irq/domain/hierarchy.h) \
-    $(wildcard include/config/gpio/generic.h) \
-    $(wildcard include/config/of/gpio.h) \
-    $(wildcard include/config/pinctrl.h) \
-  include/linux/device.h \
-    $(wildcard include/config/debug/devres.h) \
-    $(wildcard include/config/generic/msi/irq/domain.h) \
-    $(wildcard include/config/generic/msi/irq.h) \
-    $(wildcard include/config/dma/cma.h) \
-    $(wildcard include/config/devtmpfs.h) \
-    $(wildcard include/config/sysfs/deprecated.h) \
-  include/linux/ioport.h \
-  include/linux/klist.h \
-  include/linux/pm.h \
-    $(wildcard include/config/vt/console/sleep.h) \
-    $(wildcard include/config/pm.h) \
-    $(wildcard include/config/pm/clk.h) \
-    $(wildcard include/config/pm/generic/domains.h) \
-  include/linux/ratelimit.h \
-  include/linux/overflow.h \
-  arch/arm64/include/asm/device.h \
-    $(wildcard include/config/iommu/api.h) \
-    $(wildcard include/config/xen.h) \
-    $(wildcard include/config/arm64/dma/use/iommu.h) \
-  include/linux/pm_wakeup.h \
-  include/linux/irq.h \
-    $(wildcard include/config/generic/irq/effective/aff/mask.h) \
-    $(wildcard include/config/generic/irq/ipi.h) \
-    $(wildcard include/config/generic/irq/migration.h) \
-    $(wildcard include/config/generic/pending/irq.h) \
-    $(wildcard include/config/hardirqs/sw/resend.h) \
-    $(wildcard include/config/generic/irq/legacy/alloc/hwirq.h) \
-    $(wildcard include/config/generic/irq/legacy.h) \
-    $(wildcard include/config/generic/irq/multi/handler.h) \
-  include/linux/irqhandler.h \
-  include/linux/io.h \
-    $(wildcard include/config/have/arch/huge/vmap.h) \
-    $(wildcard include/config/has/ioport/map.h) \
-    $(wildcard include/config/pci.h) \
-  arch/arm64/include/asm/io.h \
-  arch/arm64/include/asm/pgtable.h \
-  arch/arm64/include/asm/proc-fns.h \
-  arch/arm64/include/asm/pgtable-prot.h \
-  arch/arm64/include/asm/fixmap.h \
-    $(wildcard include/config/acpi/apei/ghes.h) \
-    $(wildcard include/config/unmap/kernel/at/el0.h) \
-  arch/arm64/include/asm/boot.h \
-  include/asm-generic/fixmap.h \
-  include/linux/mm_types.h \
-    $(wildcard include/config/have/aligned/struct/page.h) \
-    $(wildcard include/config/userfaultfd.h) \
-    $(wildcard include/config/have/arch/compat/mmap/bases.h) \
-    $(wildcard include/config/membarrier.h) \
-    $(wildcard include/config/aio.h) \
-    $(wildcard include/config/mmu/notifier.h) \
-    $(wildcard include/config/hmm.h) \
-  include/linux/auxvec.h \
-  include/uapi/linux/auxvec.h \
-  arch/arm64/include/uapi/asm/auxvec.h \
-  include/linux/uprobes.h \
-  arch/arm64/include/asm/uprobes.h \
-  arch/arm64/include/asm/debug-monitors.h \
-  arch/arm64/include/asm/probes.h \
-    $(wildcard include/config/kprobes.h) \
-  arch/arm64/include/asm/mmu.h \
-    $(wildcard include/config/harden/branch/predictor.h) \
-    $(wildcard include/config/harden/el2/vectors.h) \
-  include/asm-generic/pgtable.h \
-    $(wildcard include/config/have/arch/transparent/hugepage/pud.h) \
-    $(wildcard include/config/have/arch/soft/dirty.h) \
-    $(wildcard include/config/arch/enable/thp/migration.h) \
-    $(wildcard include/config/x86/espfix64.h) \
-  arch/arm64/include/generated/asm/early_ioremap.h \
-  include/asm-generic/early_ioremap.h \
-    $(wildcard include/config/generic/early/ioremap.h) \
-  include/xen/xen.h \
-    $(wildcard include/config/xen/pvh.h) \
-    $(wildcard include/config/xen/dom0.h) \
-  include/asm-generic/io.h \
-    $(wildcard include/config/generic/iomap.h) \
-    $(wildcard include/config/virt/to/bus.h) \
-  include/asm-generic/pci_iomap.h \
-    $(wildcard include/config/no/generic/pci/ioport/map.h) \
-    $(wildcard include/config/generic/pci/iomap.h) \
-  include/linux/logic_pio.h \
-    $(wildcard include/config/indirect/pio.h) \
-  include/linux/vmalloc.h \
-  include/linux/slab.h \
-    $(wildcard include/config/debug/slab.h) \
-    $(wildcard include/config/failslab.h) \
-    $(wildcard include/config/have/hardened/usercopy/allocator.h) \
-    $(wildcard include/config/slab.h) \
-    $(wildcard include/config/slub.h) \
-    $(wildcard include/config/slob.h) \
-  include/linux/kasan.h \
-    $(wildcard include/config/kasan/generic.h) \
-  arch/arm64/include/generated/asm/irq_regs.h \
-  include/asm-generic/irq_regs.h \
-  include/linux/irqdesc.h \
-    $(wildcard include/config/irq/preflow/fasteoi.h) \
-    $(wildcard include/config/generic/irq/debugfs.h) \
-    $(wildcard include/config/sparse/irq.h) \
-    $(wildcard include/config/handle/domain/irq.h) \
-  arch/arm64/include/generated/asm/hw_irq.h \
-  include/asm-generic/hw_irq.h \
-  include/linux/irqchip/chained_irq.h \
-  include/linux/irqdomain.h \
-    $(wildcard include/config/irq/domain.h) \
-  include/linux/pinctrl/pinctrl.h \
-    $(wildcard include/config/generic/pinconf.h) \
-  include/linux/seq_file.h \
-  include/linux/fs.h \
-    $(wildcard include/config/fs/posix/acl.h) \
-    $(wildcard include/config/cgroup/writeback.h) \
-    $(wildcard include/config/ima.h) \
-    $(wildcard include/config/fsnotify.h) \
-    $(wildcard include/config/fs/encryption.h) \
-    $(wildcard include/config/fs/verity.h) \
-    $(wildcard include/config/epoll.h) \
-    $(wildcard include/config/file/locking.h) \
-    $(wildcard include/config/unicode.h) \
-    $(wildcard include/config/quota.h) \
-    $(wildcard include/config/fs/dax.h) \
-    $(wildcard include/config/mandatory/file/locking.h) \
-    $(wildcard include/config/migration.h) \
-  include/linux/wait_bit.h \
-  include/linux/kdev_t.h \
-  include/uapi/linux/kdev_t.h \
-  include/linux/dcache.h \
-  include/linux/rculist_bl.h \
-  include/linux/list_bl.h \
-  include/linux/bit_spinlock.h \
-  include/linux/lockref.h \
-    $(wildcard include/config/arch/use/cmpxchg/lockref.h) \
-  include/linux/stringhash.h \
-    $(wildcard include/config/dcache/word/access.h) \
-  include/linux/hash.h \
-    $(wildcard include/config/have/arch/hash.h) \
-  include/linux/path.h \
-  include/linux/list_lru.h \
-  include/linux/shrinker.h \
-  include/linux/xarray.h \
-  include/linux/capability.h \
-  include/uapi/linux/capability.h \
-  include/linux/semaphore.h \
-  include/linux/fcntl.h \
-  include/uapi/linux/fcntl.h \
-  arch/arm64/include/uapi/asm/fcntl.h \
-  include/uapi/asm-generic/fcntl.h \
-  include/uapi/linux/fiemap.h \
-  include/linux/migrate_mode.h \
-  include/linux/percpu-rwsem.h \
-  include/linux/rcuwait.h \
-  include/linux/rcu_sync.h \
-  include/linux/delayed_call.h \
-  include/linux/errseq.h \
-  include/linux/ioprio.h \
-  include/linux/sched/rt.h \
-  include/linux/iocontext.h \
-  include/uapi/linux/fs.h \
-  include/uapi/linux/ioctl.h \
-  arch/arm64/include/generated/uapi/asm/ioctl.h \
-  include/asm-generic/ioctl.h \
-  include/uapi/asm-generic/ioctl.h \
-  include/linux/quota.h \
-    $(wildcard include/config/quota/netlink/interface.h) \
-  include/linux/percpu_counter.h \
-  include/uapi/linux/dqblk_xfs.h \
-  include/linux/dqblk_v1.h \
-  include/linux/dqblk_v2.h \
-  include/linux/dqblk_qtree.h \
-  include/linux/projid.h \
-  include/uapi/linux/quota.h \
-  include/linux/nfs_fs_i.h \
-  include/linux/cred.h \
-    $(wildcard include/config/debug/credentials.h) \
-    $(wildcard include/config/keys.h) \
-  include/linux/key.h \
-  include/linux/assoc_array.h \
-    $(wildcard include/config/associative/array.h) \
-  include/linux/selinux.h \
-    $(wildcard include/config/security/selinux.h) \
-  include/linux/sched/user.h \
-    $(wildcard include/config/fanotify.h) \
-    $(wildcard include/config/posix/mqueue.h) \
-    $(wildcard include/config/bpf/syscall.h) \
-    $(wildcard include/config/net.h) \
-  include/linux/pinctrl/pinctrl-state.h \
-  include/linux/pinctrl/devinfo.h \
-  include/linux/pinctrl/consumer.h \
-  include/linux/pinctrl/pinconf-generic.h \
-    $(wildcard include/config/debug/fs.h) \
-  include/linux/pinctrl/machine.h \
-  include/linux/gpio/consumer.h \
-    $(wildcard include/config/gpio/sysfs.h) \
+  include/linux/build-salt.h \
+    $(wildcard include/config/build/salt.h) \
+  include/linux/elfnote.h \
+  include/linux/vermagic.h \
+  include/generated/utsrelease.h \
 
-/home/why/rk3568/drive_code/23_INTERRUPT/interrupt.o: $(deps_/home/why/rk3568/drive_code/23_INTERRUPT/interrupt.o)
+/home/why/rk3568/drive_code/27_platform_led/platform_driver.mod.o: $(deps_/home/why/rk3568/drive_code/27_platform_led/platform_driver.mod.o)
 
-$(deps_/home/why/rk3568/drive_code/23_INTERRUPT/interrupt.o):
+$(deps_/home/why/rk3568/drive_code/27_platform_led/platform_driver.mod.o):

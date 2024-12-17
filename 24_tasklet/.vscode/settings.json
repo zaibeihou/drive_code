@@ -1,0 +1,18 @@
+{
+    "files.associations": {
+        "kernel.h": "c",
+        "init.h": "c",
+        "module.h": "c",
+        "list.h": "c",
+        "const.h": "c",
+        "poison.h": "c",
+        "compiler.h": "c",
+        "bitops.h": "c",
+        "stat.h": "c",
+        "stddef.h": "c",
+        "array": "c",
+        "interrupt.h": "c",
+        "gpio.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "enabled"
+}

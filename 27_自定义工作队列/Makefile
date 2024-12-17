@@ -1,7 +1,7 @@
 export ARCH=arm64
 export CROSS_COMPILE=aarch64-linux-gnu-
 
-obj-m := interrupt.o
+obj-m := work_queue.o
 
 KDIR := /home/zaibeihou/code/linux_sdk/kernel
 PWD ?= $(shell pwd)

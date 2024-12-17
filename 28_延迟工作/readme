@@ -1,0 +1,2 @@
+与非延时工作队列的区别只是放在队列queue上的 work结构体不一样 delayed_work  初始化的时候使用的函数也不一样 
+delayed_work里面有两个成员 work和一个定时器timer_list

@@ -1,0 +1,29 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/home/zaibeihou/code/linux_sdk/kernel/include/*",
+                "/home/zaibeihou/code/linux_sdk/kernel/include/uapi/*",
+                "/home/zaibeihou/code/linux_sdk/kernel/include/generated/*",
+                "/home/zaibeihou/code/linux_sdk/kernel/include/generated/uapi/*",
+                "/home/zaibeihou/code/linux_sdk/kernel/arch/arm64/include/*",
+                "/home/zaibeihou/code/linux_sdk/kernel/arch/arm64/include/uapi/*",
+                "/home/zaibeihou/code/linux_sdk/kernel/arch/arm64/include/generated/*",
+                "/home/zaibeihou/code/linux_sdk/kernel/arch/arm64/include/generated/uapi/*"
+            ],
+            "defines": [
+                "__KERNEL__",
+                "ARM64",
+                "KBUILD_MODNAME=\"yourmodule\""
+            ],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c17",
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "linux-gcc-x64",
+            "configurationProvider": "ms-vscode.makefile-tools"
+        }
+    ],
+    "version": 4
+}

@@ -1,0 +1,28 @@
+tasklet_kill() 内部需要等待所有正在执行的 tasklet 完成
+如果 tasklet 处于 disabled 状态，那些已经在队列中的 tasklet 永远无法执行完成
+这会导致 tasklet_kill() 一直等待，造成死锁
+
+
+这是一个很好的问题。让我解释一下 tasklet_enable() 和 tasklet_kill() 的执行顺序的原因：
+ 
+1. tasklet_enable() 在这里的作用是确保 tasklet 处于启用状态。这是因为:
+   - tasklet_kill() 要求 tasklet 必须是可运行的状态才能正确清理
+   - 如果 tasklet 处于 disabled 状态，tasklet_kill() 可能会无法正确等待和清理所有正在运行或待运行的 tasklet 实例
+
+2. tasklet_kill() 的工作机制是:
+   - 等待所有已经排队的 tasklet 实例执行完成
+   - 确保没有新的 tasklet 实例被调度
+   - 最后才释放 tasklet 相关资源
+
+3. 如果在调用 tasklet_kill() 之前 tasklet 是 disabled 状态:
+   - 可能会有一些已经排队但还未执行的 tasklet 实例
+   - 这些实例因为 disabled 状态而无法执行
+   - tasklet_kill() 就会一直等待这些无法执行的实例，导致死锁
+
+所以正确的清理顺序是:
+1. 先 enable 确保 tasklet 可以执行
+2. 然后调用 tasklet_kill() 等待所有实例执行完成并清理
+3. 最后才释放其他资源
+
+这样可以确保安全完整地清理所有 tasklet 相关资源，避免资源泄露和死锁问题。
+

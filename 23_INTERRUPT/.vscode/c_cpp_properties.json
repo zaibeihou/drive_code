@@ -4,9 +4,12 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/home/why/rk3568/linux_sdk/kernel/include/*",
-                "/home/why/rk3568/linux_sdk/kernel/include/uapi",
-                "/home/why/rk3568/linux_sdk/kernel/include/generated/uapi"
+                //"/home/why/rk3568/linux_sdk/kernel/include/*",
+                //"/home/why/rk3568/linux_sdk/kernel/include/uapi",
+                //"/home/why/rk3568/linux_sdk/kernel/include/generated/uapi"
+                "/home/zaibeihou/code/linux_sdk/kernel/include/*",
+                "/home/zaibeihou/code/linux_sdk/kernel/include/uapi",
+                "/home/zaibeihou/code/linux_sdk/kernel/include/generated/uapi"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

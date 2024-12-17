@@ -1,0 +1,120 @@
+好的，我来整理一个实用的 Git 命令手册：
+
+# Git 基础命令
+
+## 仓库初始化和配置
+```bash
+git init                     # 初始化仓库
+git clone <url>             # 克隆远程仓库
+git config --global user.name "name"     # 设置用户名
+git config --global user.email "email"   # 设置邮箱
+```
+
+## 基本操作
+```bash
+git status                  # 查看仓库状态
+git add <file>             # 添加文件到暂存区
+git add .                  # 添加所有更改到暂存区
+git commit -m "message"    # 提交更改
+git log                    # 查看提交历史
+git diff                   # 查看未暂存的更改
+```
+
+## 分支操作
+```bash
+git branch                 # 查看分支列表
+git branch <name>         # 创建新分支
+git checkout <branch>     # 切换分支
+git checkout -b <name>    # 创建并切换到新分支
+git merge <branch>        # 合并分支
+git branch -d <branch>    # 删除分支
+```
+
+## 远程仓库操作
+```bash
+git remote add origin <url>    # 添加远程仓库
+git push origin <branch>       # 推送到远程分支
+git pull origin <branch>       # 拉取远程分支
+git fetch                      # 获取远程更新但不合并
+git remote -v                  # 查看远程仓库信息
+```
+
+## 撤销和回滚
+```bash
+git checkout -- <file>     # 撤销工作区的修改
+git reset HEAD <file>      # 撤销暂存区的修改
+git reset --hard <commit>  # 回滚到指定提交
+git revert <commit>        # 创建新提交来撤销某个提交
+```
+
+## 暂存操作
+```bash
+git stash                  # 暂存当前工作
+git stash list            # 查看暂存列表
+git stash pop             # 恢复最近的暂存
+git stash drop            # 删除暂存
+```
+
+## 查看信息
+```bash
+git log --oneline         # 简化版提交历史
+git blame <file>          # 查看文件的修改历史
+git diff branch1 branch2  # 比较两个分支的差异
+```
+
+## 标签管理
+```bash
+git tag                   # 查看标签列表
+git tag <tagname>         # 创建标签
+git tag -d <tagname>      # 删除标签
+```
+
+## 高级操作
+```bash
+git rebase <branch>       # 变基操作
+git cherry-pick <commit>  # 挑选提交
+git submodule            # 子模块管理
+```
+
+## 常见工作流程
+1. 拉取最新代码：
+```bash
+git pull origin main
+```
+
+2. 创建和切换功能分支：
+```bash
+git checkout -b feature_branch
+```
+
+3. 提交更改：
+```bash
+git add .
+git commit -m "add new feature"
+```
+
+4. 推送到远程：
+```bash
+git push origin feature_branch
+```
+
+5. 合并更改：
+```bash
+git checkout main
+git merge feature_branch
+git push origin main
+```
+
+## 提示和建议
+- 经常使用 `git status` 检查仓库状态
+- 提交前用 `git diff` 检查更改
+- 定期推送到远程备份
+- 使用有意义的提交信息
+- 重要操作前先创建分支
+
+需要了解某个特定命令的更多信息时，可以使用：
+```bash
+git help <command>
+```
+
+这些是最常用的Git命令，掌握它们可以应对大多数日常开发场景。希望这个手册对你有帮助！

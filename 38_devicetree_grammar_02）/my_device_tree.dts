@@ -1,0 +1,24 @@
+/dts-v1/;
+
+/ {
+	model = "this is my_device_tree";
+
+	chosen {
+		bootargs = "console=ttyS0,115200";
+	};
+
+	aliases {
+		led0 = "/node1/gpio@22020101";
+	};
+
+	node1 {
+		#address-cells = <0x1>;
+		#size-cells = <0x1>;
+
+		gpio@22020101 {
+			compatible = "led";
+			status = "okay";
+			reg = <0x22020101 0x40>;
+		};
+	};
+};

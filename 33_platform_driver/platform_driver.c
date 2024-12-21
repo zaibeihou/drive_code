@@ -3,7 +3,7 @@
 #include <linux/init.h>
 #include <linux/platform_device.h>
 #include <linux/mod_devicetable.h>
-
+ 
 static int my_probe(struct platform_device * dev){
     printk("my_probe\n");
     return 0;

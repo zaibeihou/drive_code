@@ -12,7 +12,7 @@ static int my_probe(struct platform_device * dev){
     
     my_platform_resource = platform_get_resource(dev, IORESOURCE_MEM, 0);
     printk("MEM is %0llx\n", my_platform_resource->start);
-    
+
     return 0;
 }
 
@@ -33,6 +33,7 @@ struct platform_driver my_driver = {
     .probe = my_probe,
     .remove = my_remove,
     .id_table = &my_id_table,
+
 };
 
 

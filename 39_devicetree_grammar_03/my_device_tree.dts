@@ -1,0 +1,12 @@
+/dts-v1/;
+
+
+/ {
+	model = "this is my_device_tree";
+
+	ft5x06@38{
+		compatible = "edt-ft5206";
+		interrupt-parent = <&gpio3>;
+		interrupts = <101 1>;
+	};
+};

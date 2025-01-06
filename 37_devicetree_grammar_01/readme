@@ -1,0 +1,50 @@
+让我详细解释一下设备树（Device Tree）：
+
+设备树是一种描述硬件的数据结构，主要用于嵌入式系统中，特别是在 Linux 系统中。它的作用是描述系统硬件的组成和配置。
+
+1. 基本概念：
+```dts
+node_name: full_name@address {    // 节点名称和地址
+    property1 = <value>;          // 属性和值
+    property2 = "string value";   // 字符串属性
+    
+    child_node {                  // 子节点
+        ...
+    };
+};
+```
+
+2. 主要组成部分：
+- 节点（Node）：代表一个硬件设备
+  - 每个节点可以有一个标签（label），如 gpio0:
+  - 可以有一个单元地址（unit address），如 @fdd60000
+- 属性（Property）：描述设备的特征
+  - compatible：指明设备的编程模型
+  - reg：描述设备寄存器的地址范围
+  - interrupts：描述设备使用的中断
+- 子节点：描述从属设备
+
+3. 以你之前的代码为例：
+```dts
+gpio0: gpio@fdd60000 {
+    compatible = "rockchip,gpio-bank";  // 指定驱动程序
+    reg = <0x0 0xfdd60000 0x0 0x100>;  // 寄存器地址和大小
+    interrupts = <GIC_SPI 33 IRQ_TYPE_LEVEL_HIGH>;  // 中断配置
+    gpio-controller;  // 表明这是一个 GPIO 控制器
+    #gpio-cells = <2>;  // GPIO 说明符的参数数量
+};
+```
+
+4. 设备树的主要优势：
+- 硬件配置与代码分离
+- 同一个内核可以支持不同的硬件配置
+- 便于硬件配置的修改和维护
+- 提供了标准的硬件描述方式
+
+5. 加载过程：
+- bootloader 将设备树加载到内存
+- 内核解析设备树
+- 根据设备树创建设备驱动
+- 初始化和配置硬件
+
+设备树极大地简化了嵌入式系统的开发，使硬件配置更加灵活和标准化。

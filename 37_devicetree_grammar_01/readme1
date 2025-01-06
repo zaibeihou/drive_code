@@ -1,0 +1,90 @@
+让我通过一个具体的例子来解释：
+
+假设我们有一个触摸屏驱动，需要支持两个不同的硬件平台：
+
+1. 平台总线方式：
+```c
+// 平台 A 的配置
+#ifdef PLATFORM_A
+static struct resource ft5x06_resources[] = {
+    [0] = {
+        .start = 0xfdd60000,    // 平台A的地址
+        .end   = 0xfdd60100,
+        .flags = IORESOURCE_MEM,
+    },
+    [1] = {
+        .start = 33,            // 平台A的中断号
+        .end   = 33,
+        .flags = IORESOURCE_IRQ,
+    },
+};
+
+// 平台 B 的配置
+#elif defined(PLATFORM_B)
+static struct resource ft5x06_resources[] = {
+    [0] = {
+        .start = 0xfee70000,    // 平台B的地址
+        .end   = 0xfee70100,
+        .flags = IORESOURCE_MEM,
+    },
+    [1] = {
+        .start = 45,            // 平台B的中断号
+        .end   = 45,
+        .flags = IORESOURCE_IRQ,
+    },
+};
+#endif
+```
+
+这种方式的问题：
+1. 硬编码在内核中：
+   - 每次添加新平台都需要修改内核代码
+   - 增加了大量的条件编译代码
+
+2. 需要单独内核：
+   - 平台A和平台B需要分别编译不同的内核
+   - 每个平台的配置都要单独维护
+
+3. 修改需重新编译：
+   - 即使只是改个地址或中断号
+   - 也需要重新编译整个内核
+
+4. 维护困难：
+   - 代码中混杂了大量平台相关的配置
+   - 每增加一个平台就要增加相应的条件编译
+   - 容易出错且难以维护
+
+相比之下，设备树方式：
+```dts
+// 平台 A 的设备树
+ft5x06: ft5x06@38 {
+    compatible = "edt,edt-ft5306";
+    reg = <0xfdd60000 0x100>;
+    interrupts = <33 IRQ_TYPE_LEVEL_HIGH>;
+};
+
+// 平台 B 的设备树（单独文件）
+ft5x06: ft5x06@38 {
+    compatible = "edt,edt-ft5306";
+    reg = <0xfee70000 0x100>;
+    interrupts = <45 IRQ_TYPE_LEVEL_HIGH>;
+};
+```
+
+优势：
+1. 配置与代码分离
+   - 不需要修改内核代码
+   - 只需要准备不同的设备树文件
+
+2. 一份内核支持多平台
+   - 同一个内核可以加载不同的设备树
+   - 大大减少了维护工作
+
+3. 修改配置更简单
+   - 只需修改设备树文件
+   - 不需要重新编译内核
+
+4. 更容易维护
+   - 配置集中且清晰
+   - 不需要条件编译
+   - 错误更容易发现和修复

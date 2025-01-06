@@ -9,4 +9,9 @@
 		interrupt-parent = <&gpio3>;
 		interrupts = <101 1>;
 	};
+
+	led:led@1{
+		compatible = "my_led";
+		gpios=<&gpio0 RK_PB7 GPIO_ACTIVE_HIGH>;
+	};
 };

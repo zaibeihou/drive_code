@@ -1,0 +1,9 @@
+/dts-v1/;
+/plugin/;
+
+
+&{/vcc-camera-regulator} {
+	testnode {
+		status = "okay";
+	};
+};

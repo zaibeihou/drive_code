@@ -1,0 +1,1 @@
+cmd_/home/why/rk3568/drive_code/48_of_irq/platform_driver.ko := aarch64-linux-gnu-ld -r -EL  -maarch64elf -T ./scripts/module-common.lds -T ./arch/arm64/kernel/module.lds  --build-id  -o /home/why/rk3568/drive_code/48_of_irq/platform_driver.ko /home/why/rk3568/drive_code/48_of_irq/platform_driver.o /home/why/rk3568/drive_code/48_of_irq/platform_driver.mod.o ;  true

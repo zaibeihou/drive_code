@@ -1,0 +1,3 @@
+/home/why/rk3568/drive_code/48_of_irq/platform_driver.ko
+/home/why/rk3568/drive_code/48_of_irq/platform_driver.o
+

@@ -1,0 +1,57 @@
+设备树 overlay 的加载过程：
+
+# 1. 加载设备树 overlay
+dtoverlay xxx.dtbo
+
+# 2. 内核会自动在 configfs 中创建相应的结构
+# 路径通常在：/sys/kernel/config/device-tree/overlays/
+这是因为：
+
+内核已经注册了设备树相关的 configfs 子系统
+这个子系统专门用来处理设备树 overlay
+当你加载 dtbo 文件时，内核会自动在这个子系统下创建对应的目录
+
+所以看起来像是可以直接 mkdir，但实际上：
+
+底层已经有了注册好的 configfs 子系统
+这个子系统专门处理设备树 overlay
+你的操作都是在这个已注册的子系统框架内进行的
+
+这就像：
+
+你不能在 configfs 根目录下随意 mkdir
+但可以在已注册的子系统目录下创建内核支持的目录结构
+
+简单说：
+
+不是真的可以随便 mkdir
+而是在一个已经注册好的设备树 overlay 子系统中操作
+
+你的设备树 overlay 文件：
+
+/dts-v1/;
+/plugin/;
+&{/vcc-camera-regulator} {
+    testnode {
+        status = "okay";
+    };
+};
+
+实际过程：
+
+# 1. 当你加载这个 overlay 到内核时
+dtoverlay xxx.dtbo
+
+# 2. 在 /sys/kernel/config/device-tree/overlays/ 下创建目录
+mkdir /sys/kernel/config/device-tree/overlays/myoverlay
+
+# 3. 这可以成功，是因为 device-tree 这个 configfs 子系统在内核启动时就已经注册好了
+我的问题是：你能在 /sys/kernel/config/device-tree/overlays/ 下 mkdir，
+但你能在 /sys/kernel/config/ 下直接 mkdir 创建其他目录吗？
+可以通过实验验证一下：
+# 这个会成功
+mkdir /sys/kernel/config/device-tree/overlays/test
+
+# 试试这个
+mkdir /sys/kernel/config/mytest
+你可以试试看第二个命令是否能成功？这样就能理解我说的了。

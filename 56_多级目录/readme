@@ -1,0 +1,62 @@
+`kmemdup` 是 Linux 内核中的一个内存操作函数，让我详细解释它的作用：
+
+基本定义：
+```c
+void *kmemdup(const void *src, size_t len, gfp_t gfp)
+```
+
+参数含义：
+- `src`: 源数据的指针
+- `len`: 要复制的数据长度
+- `gfp`: 内存分配标志（比如 GFP_KERNEL）
+
+它的主要功能是：
+1. 在内核空间分配新的内存
+2. 将源数据复制到新分配的内存中
+3. 返回新分配内存的指针
+
+实际上它相当于这两个操作的组合：
+```c
+// kmemdup 内部基本等价于：
+void *new_addr = kmalloc(len, gfp);  // 先分配内存
+if (new_addr)
+    memcpy(new_addr, src, len);      // 再复制数据
+```
+
+在您提供的代码中：
+```c
+myitem->addr = kmemdup(page, size, GFP_KERNEL);
+```
+这行代码的作用是：
+1. 在内核空间分配 size 大小的内存
+2. 将用户写入的数据（page）复制到这块新内存中
+3. 将新内存的地址保存在 myitem->addr 中
+
+使用 kmemdup 的优点：
+1. 安全性：保证数据在内核空间有自己的副本
+2. 便利性：合并了分配和复制两个步骤
+3. 原子性：分配和复制作为一个整体操作
+
+需要注意的点：
+1. 使用后需要用 kfree 释放内存
+2. 应该检查返回值是否为 NULL（分配失败）
+3. 在您的代码中应该加入错误处理：
+
+```c
+ssize_t mywrite_store(struct config_item *item, const char *page, size_t size) {
+    struct myitem *myitem = container_of(item, struct myitem, item);
+    
+    // 释放旧内存
+    if (myitem->addr)
+        kfree(myitem->addr);
+    
+    // 分配并复制新数据
+    myitem->addr = kmemdup(page, size, GFP_KERNEL);
+    if (!myitem->addr)
+        return -ENOMEM;  // 内存分配失败
+        
+    myitem->size = size;
+    printk("mywrite_store\n");
+    return size;
+}
+```

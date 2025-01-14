@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "kernel.h": "c",
+        "init.h": "c",
+        "module.h": "c",
+        "list.h": "c",
+        "const.h": "c",
+        "poison.h": "c",
+        "compiler.h": "c",
+        "bitops.h": "c",
+        "configfs.h": "c",
+        "system_error": "cpp"
+    }
+}

@@ -1,0 +1,10 @@
+设备device与设备树device tree相关。满足一定条件的compatible时(这些特殊的compatilbe属性为: “simple-bus”,“simple-mfd”,“isa”,"arm,amba-bus ")，设备树被转换并注册成platform_device。
+
+
+dts中的节点信息终将经过dts -> dtb -> device_node -> platform_device这样的过程。
+但并不是所有device_node都会被转换成platform_device
+需满足： 根节点下含有compatile属性的子节点 如果一个结点的compatile属性含有这些特殊的值(“simple-bus”,“simple-mfd”,“isa”,“arm,amba-bus”)之一, 那么它的子结点(需含compatile属性)也可以转换为platform_device i2c, spi等总线节点下的子节点, 应该交给对应的总线驱动程序来处理, 它们不应该被转换为platform_device
+
+
+dts -> dtb -> device_node -> platform_devic -> platform_device -> device
+注册总线时 通过match函数匹配

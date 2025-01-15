@@ -1,0 +1,1 @@
+在device和driver结构体中 都包含了bus_type结构体  bus结构体本身带有match和probe函数 在加载device和driver时，都会调用match函数 所以device和driver的加载顺序没有影响 且在匹配成功后 会调用probe函数 在bus中和driver中都可以定义probe函数 

@@ -21,11 +21,13 @@ int my_bus_probe(struct device *dev){
     return 0;
 }
 
+
 struct bus_type my_bus = {
     .name = "my_bus",
     .match = my_bus_match,
     .probe = my_bus_probe,
 };
+EXPORT_SYMBOL_GPL(my_bus);
  
 ssize_t bus_attr_show(struct bus_type *bus, char *buf){
     return sprintf(buf, "my_bus_attr_show\n");

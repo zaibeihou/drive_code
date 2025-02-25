@@ -1,0 +1,1 @@
+cmd_/home/why/rk3568/drive_code/78_gpioctrl_api_02/gpio_ctrl.ko := aarch64-linux-gnu-ld -r -EL  -maarch64elf -T ./scripts/module-common.lds -T ./arch/arm64/kernel/module.lds  --build-id  -o /home/why/rk3568/drive_code/78_gpioctrl_api_02/gpio_ctrl.ko /home/why/rk3568/drive_code/78_gpioctrl_api_02/gpio_ctrl.o /home/why/rk3568/drive_code/78_gpioctrl_api_02/gpio_ctrl.mod.o ;  true

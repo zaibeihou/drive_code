@@ -1,0 +1,18 @@
+{
+    "files.associations": {
+        "kernel.h": "c",
+        "init.h": "c",
+        "module.h": "c",
+        "list.h": "c",
+        "const.h": "c",
+        "poison.h": "c",
+        "compiler.h": "c",
+        "bitops.h": "c",
+        "platform_device.h": "c",
+        "device.h": "c",
+        "android_kabi.h": "c",
+        "atomic.h": "c",
+        "consumer.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "enabled"
+}

@@ -1,0 +1,25 @@
+{
+    "files.associations": {
+        "kernel.h": "c",
+        "init.h": "c",
+        "module.h": "c",
+        "list.h": "c",
+        "const.h": "c",
+        "poison.h": "c",
+        "compiler.h": "c",
+        "bitops.h": "c",
+        "stat.h": "c",
+        "stddef.h": "c",
+        "array": "c",
+        "moduleparam.h": "c",
+        "input.h": "c",
+        "types.h": "c",
+        "platform_device.h": "c",
+        "fs.h": "c",
+        "kdev_t.h": "c",
+        "i2c.h": "c",
+        "consumer.h": "c",
+        "gpio.h": "c",
+        "stdlib.h": "c"
+    }
+}
